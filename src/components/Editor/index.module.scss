@@ -7,6 +7,11 @@
     height: 100%;
   }
 
+  // 隐藏所有 gutter（行号、折叠标记等）
+  :global(.cm-gutters) {
+    display: none !important;
+  }
+
   // 滚动区域
   :global(.cm-scroller) {
     overflow: auto;
@@ -35,34 +40,6 @@
   // 当前行高亮
   :global(.cm-activeLine) {
     background-color: var(--color-active-line) !important;
-  }
-
-  // 行号区域
-  :global(.cm-gutters) {
-    background-color: transparent;
-    border-right: 1px solid var(--color-border);
-    color: var(--color-text-secondary);
-    font-size: 12px;
-    user-select: none;
-  }
-
-  // 当前行号高亮
-  :global(.cm-activeLineGutter) {
-    background-color: var(--color-active-line) !important;
-    color: var(--color-primary);
-    font-weight: 600;
-  }
-
-  // 代码折叠标记
-  :global(.cm-foldGutter) {
-    .cm-foldGutterElement {
-      cursor: pointer;
-      opacity: 0.5;
-
-      &:hover {
-        opacity: 1;
-      }
-    }
   }
 
   // 占位符（空内容时）

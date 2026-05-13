@@ -2,11 +2,12 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 6px 12px;
+  padding: 12px 12px 8px;
   border-bottom: 1px solid var(--border-color);
   background-color: var(--bg-secondary);
   flex-shrink: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  box-sizing: border-box;
 }
 
 .toggleBtn {

@@ -1,6 +1,23 @@
 import { useCallback } from "react";
 import { EditorView } from "@codemirror/view";
 import { editorViewRef } from "@/components/Editor";
+import {
+  Bold,
+  Italic,
+  Strikethrough,
+  Heading1,
+  Heading2,
+  Heading3,
+  List,
+  ListOrdered,
+  CheckSquare,
+  Quote,
+  Code,
+  Link,
+  Image,
+  PanelLeftClose,
+  PanelLeftOpen,
+} from "lucide-react";
 import styles from "./index.module.scss";
 
 type SyntaxType =
@@ -19,32 +36,42 @@ type SyntaxType =
   | "image";
 
 interface ToolbarButton {
-  label: string;
+  icon: React.ReactNode;
   title: string;
   syntax: SyntaxType;
 }
 
+const iconSize = 16;
+
 const buttonGroups: ToolbarButton[][] = [
   [
-    { label: "B", title: "加粗", syntax: "bold" },
-    { label: "I", title: "斜体", syntax: "italic" },
-    { label: "S", title: "删除线", syntax: "strikethrough" },
+    { icon: <Bold size={iconSize} />, title: "加粗", syntax: "bold" },
+    { icon: <Italic size={iconSize} />, title: "斜体", syntax: "italic" },
+    {
+      icon: <Strikethrough size={iconSize} />,
+      title: "删除线",
+      syntax: "strikethrough",
+    },
   ],
   [
-    { label: "H1", title: "标题 1", syntax: "h1" },
-    { label: "H2", title: "标题 2", syntax: "h2" },
-    { label: "H3", title: "标题 3", syntax: "h3" },
+    { icon: <Heading1 size={iconSize} />, title: "标题 1", syntax: "h1" },
+    { icon: <Heading2 size={iconSize} />, title: "标题 2", syntax: "h2" },
+    { icon: <Heading3 size={iconSize} />, title: "标题 3", syntax: "h3" },
   ],
   [
-    { label: "ul", title: "无序列表", syntax: "ul" },
-    { label: "ol", title: "有序列表", syntax: "ol" },
-    { label: "☑", title: "任务列表", syntax: "task" },
+    { icon: <List size={iconSize} />, title: "无序列表", syntax: "ul" },
+    { icon: <ListOrdered size={iconSize} />, title: "有序列表", syntax: "ol" },
+    {
+      icon: <CheckSquare size={iconSize} />,
+      title: "任务列表",
+      syntax: "task",
+    },
   ],
   [
-    { label: "❝", title: "引用", syntax: "quote" },
-    { label: "</>", title: "代码块", syntax: "code" },
-    { label: "🔗", title: "链接", syntax: "link" },
-    { label: "🖼", title: "图片", syntax: "image" },
+    { icon: <Quote size={iconSize} />, title: "引用", syntax: "quote" },
+    { icon: <Code size={iconSize} />, title: "代码块", syntax: "code" },
+    { icon: <Link size={iconSize} />, title: "链接", syntax: "link" },
+    { icon: <Image size={iconSize} />, title: "图片", syntax: "image" },
   ],
 ];
 
@@ -130,7 +157,11 @@ export default function Toolbar({
         onClick={onToggleSidebar}
         title={sidebarCollapsed ? "展开文件管理" : "收起文件管理"}
       >
-        {sidebarCollapsed ? "☰" : "✕"}
+        {sidebarCollapsed ? (
+          <PanelLeftOpen size={iconSize} />
+        ) : (
+          <PanelLeftClose size={iconSize} />
+        )}
       </button>
       {buttonGroups.map((group, gi) => (
         <div key={gi} className={styles.group}>
@@ -141,7 +172,7 @@ export default function Toolbar({
               title={btn.title}
               onClick={() => handleClick(btn.syntax)}
             >
-              {btn.label}
+              {btn.icon}
             </button>
           ))}
         </div>

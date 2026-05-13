@@ -2,8 +2,6 @@ import { EditorState } from "@codemirror/state";
 import {
   EditorView,
   keymap,
-  lineNumbers,
-  highlightActiveLineGutter,
   highlightSpecialChars,
   drawSelection,
   rectangularSelection,
@@ -14,7 +12,6 @@ import {
   syntaxHighlighting,
   indentOnInput,
   bracketMatching,
-  foldGutter,
   foldKeymap,
 } from "@codemirror/language";
 import {
@@ -37,10 +34,6 @@ export function createEditorConfig(
   return EditorState.create({
     doc,
     extensions: [
-      // 行号
-      lineNumbers(),
-      // 当前行高亮 + 行号高亮
-      highlightActiveLineGutter(),
       // 特殊字符显示
       highlightSpecialChars(),
       // 历史记录（撤销/重做）
@@ -53,8 +46,6 @@ export function createEditorConfig(
       closeBrackets(),
       // 缩进匹配
       indentOnInput(),
-      // 代码折叠
-      foldGutter(),
       // 矩形选择（Alt+拖拽）
       rectangularSelection(),
       crosshairCursor(),
