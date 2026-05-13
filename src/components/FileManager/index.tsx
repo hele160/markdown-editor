@@ -3,7 +3,11 @@ import { useEditorStore } from "@/stores/editorStore";
 import type { MarkdownFile } from "@/types";
 import styles from "./index.module.scss";
 
-export default function FileManager() {
+interface FileManagerProps {
+  collapsed: boolean;
+}
+
+export default function FileManager({ collapsed }: FileManagerProps) {
   const files = useEditorStore(s => s.files);
   const currentFileId = useEditorStore(s => s.currentFileId);
   const setCurrentFile = useEditorStore(s => s.setCurrentFile);
@@ -25,6 +29,8 @@ export default function FileManager() {
     }
     setEditingId(null);
   };
+
+  if (collapsed) return null;
 
   return (
     <aside className={styles.sidebar}>

@@ -1,4 +1,7 @@
 .statusbar {
+  position: fixed;
+  bottom: 0;
+  right: 0;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -7,5 +10,10 @@
   color: var(--text-secondary);
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
-  flex-shrink: 0;
+  border-left: 1px solid var(--border-color);
+  z-index: 10;
+
+  &.collapsed {
+    right: 0;
+  }
 }

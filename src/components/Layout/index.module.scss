@@ -1,10 +1,14 @@
 .layout {
   display: grid;
   grid-template-columns: 240px 1fr 1fr;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr;
   height: 100vh;
   overflow: hidden;
   background-color: var(--bg-primary);
+
+  &.collapsed {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .editorArea {

@@ -108,7 +108,15 @@ function insertMarkdown(view: EditorView, syntax: SyntaxType) {
   view.focus();
 }
 
-export default function Toolbar() {
+interface ToolbarProps {
+  sidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
+}
+
+export default function Toolbar({
+  sidebarCollapsed,
+  onToggleSidebar,
+}: ToolbarProps) {
   const handleClick = useCallback((syntax: SyntaxType) => {
     const view = editorViewRef.current;
     if (!view) return;
@@ -117,6 +125,13 @@ export default function Toolbar() {
 
   return (
     <div className={styles.toolbar}>
+      <button
+        className={styles.toggleBtn}
+        onClick={onToggleSidebar}
+        title={sidebarCollapsed ? "展开文件管理" : "收起文件管理"}
+      >
+        {sidebarCollapsed ? "☰" : "✕"}
+      </button>
       {buttonGroups.map((group, gi) => (
         <div key={gi} className={styles.group}>
           {group.map(btn => (

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FileManager from "@/components/FileManager";
 import Toolbar from "@/components/Toolbar";
 import Editor from "@/components/Editor";
@@ -8,18 +9,26 @@ import styles from "./index.module.scss";
 
 export default function Layout() {
   useGlobalShortcuts();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  const toggleSidebar = () => setSidebarCollapsed(prev => !prev);
 
   return (
-    <div className={styles.layout}>
-      <FileManager />
+    <div
+      className={`${styles.layout} ${sidebarCollapsed ? styles.collapsed : ""}`}
+    >
+      <FileManager collapsed={sidebarCollapsed} />
       <section className={styles.editorArea}>
-        <Toolbar />
+        <Toolbar
+          sidebarCollapsed={sidebarCollapsed}
+          onToggleSidebar={toggleSidebar}
+        />
         <Editor />
       </section>
       <section className={styles.preview}>
         <Preview />
       </section>
-      <StatusBar />
+      <StatusBar sidebarCollapsed={sidebarCollapsed} />
     </div>
   );
 }
