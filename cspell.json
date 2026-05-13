@@ -18,7 +18,8 @@
     "staged",
     "vercel",
     "vite",
-    "zustand"
+    "zustand",
+    "keymap"
   ],
   "ignorePaths": [
     "node_modules/**",
