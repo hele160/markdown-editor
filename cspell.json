@@ -1,0 +1,40 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "import": [
+    "@cspell/dict-lorem-ipsum/cspell-ext.json",
+    "@cspell/dict-software-terms/cspell-ext.json",
+    "@cspell/dict-typescript/cspell-ext.json",
+    "@cspell/dict-node/cspell-ext.json"
+  ],
+  "words": [
+    "actived",
+    "ant-design",
+    "commitlint",
+    "lowcode",
+    "lucide",
+    "pnpm",
+    "refline",
+    "staged",
+    "vercel",
+    "vite",
+    "zustand"
+  ],
+  "ignorePaths": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    ".vscode/**",
+    "pnpm-lock.yaml",
+    "package-lock.json",
+    "**/*.svg",
+    "**/*.png"
+  ],
+  "overrides": [
+    {
+      "filename": "**/*.md",
+      "languageId": "markdown",
+      "ignoreRegExpList": ["/\\[.*?\\]\\(.*?\\)/g"]
+    }
+  ]
+}

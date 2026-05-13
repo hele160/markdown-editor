@@ -1,0 +1,34 @@
+node_modules
+dist
+build
+out
+.next
+
+# 测试和覆盖率
+coverage
+.nyc_output
+
+# 缓存目录
+.cache
+.parcel-cache
+.eslintcache
+.pnpm-store
+
+# 锁文件和日志
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+*.log
+
+# IDE 和系统文件
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# 构建辅助目录
+lerna-debug.log
+
+# 临时预览文件
+*.tmp
