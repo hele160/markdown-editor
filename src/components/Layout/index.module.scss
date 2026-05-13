@@ -1,0 +1,17 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+  overflow: hidden;
+  background-color: var(--bg-primary);
+}
+
+.editor {
+  overflow: hidden;
+  border-right: 1px solid var(--border-color);
+}
+
+.preview {
+  overflow-y: auto;
+  background-color: var(--bg-primary);
+}

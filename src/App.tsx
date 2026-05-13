@@ -1,5 +1,7 @@
+import Layout from "@/components/Layout";
+
 function App() {
-  return <div>Markdown Editor</div>;
+  return <Layout />;
 }
 
 export default App;
