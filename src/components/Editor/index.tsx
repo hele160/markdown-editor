@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
 import { EditorView } from "@codemirror/view";
-// import { EditorState } from "@codemirror/state";
 import { createEditorConfig } from "@/utils/editorConfig";
 import { useEditorStore } from "@/stores/editorStore";
 import { useThemeStore } from "@/stores/themeStore";
 import styles from "./index.module.scss";
+
+/** 模块级变量，供 Toolbar 组件访问 CodeMirror 实例 */
+export const editorViewRef: { current: EditorView | null } = { current: null };
 
 export default function Editor() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,12 +38,13 @@ export default function Editor() {
     });
 
     viewRef.current = view;
+    editorViewRef.current = view;
 
     return () => {
       view.destroy();
       viewRef.current = null;
+      editorViewRef.current = null;
     };
-    // 仅在组件挂载/卸载时执行
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
