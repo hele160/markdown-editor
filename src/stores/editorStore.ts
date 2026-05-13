@@ -62,3 +62,18 @@ export const useEditorStore = create<EditorStore>(set => ({
       files: state.files.map(f => (f.id === id ? { ...f, name } : f)),
     })),
 }));
+
+// ========================================
+// 自动保存：监听 Store 变化，1 秒防抖写入 localStorage
+// ========================================
+let saveTimer: ReturnType<typeof setTimeout> | null = null;
+
+useEditorStore.subscribe(state => {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    localStorage.setItem("md-files", JSON.stringify(state.files));
+    if (state.currentFileId) {
+      localStorage.setItem("md-current", state.currentFileId);
+    }
+  }, 1000);
+});
