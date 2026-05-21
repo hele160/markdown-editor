@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { EditorView } from "@codemirror/view";
-import { editorViewRef } from "@/components/Editor";
+import { editorViewRef } from "@/utils/editorViewRef";
 import {
   Bold,
   Italic,

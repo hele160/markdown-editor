@@ -1,12 +1,10 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { EditorView } from "@codemirror/view";
 import { createEditorConfig } from "@/utils/editorConfig";
+import { editorViewRef } from "@/utils/editorViewRef";
 import { useEditorStore } from "@/stores/editorStore";
 import { useThemeStore } from "@/stores/themeStore";
 import styles from "./index.module.scss";
-
-/** 模块级变量，供 Toolbar 组件访问 CodeMirror 实例 */
-export const editorViewRef: { current: EditorView | null } = { current: null };
 
 export default function Editor() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -20,6 +18,17 @@ export default function Editor() {
   const updateContent = useEditorStore(s => s.updateContent);
   const theme = useThemeStore(s => s.theme);
 
+  // 稳定的 onUpdate 回调
+  const handleUpdate = useCallback(
+    (value: string) => {
+      const id = useEditorStore.getState().currentFileId;
+      if (id) {
+        updateContent(id, value);
+      }
+    },
+    [updateContent],
+  );
+
   // 1. 初始化 CodeMirror 实例（仅执行一次）
   useEffect(() => {
     if (!containerRef.current) return;
@@ -27,9 +36,7 @@ export default function Editor() {
     const state = createEditorConfig(
       currentFile?.content ?? "",
       theme,
-      value => {
-        updateContent(value);
-      },
+      handleUpdate,
     );
 
     const view = new EditorView({
@@ -73,11 +80,9 @@ export default function Editor() {
     if (!view) return;
 
     const currentDoc = view.state.doc.toString();
-    const state = createEditorConfig(currentDoc, theme, value => {
-      updateContent(value);
-    });
+    const state = createEditorConfig(currentDoc, theme, handleUpdate);
     view.setState(state);
-  }, [theme, updateContent]);
+  }, [theme, handleUpdate]);
 
   return <div ref={containerRef} className={styles.editor} />;
 }

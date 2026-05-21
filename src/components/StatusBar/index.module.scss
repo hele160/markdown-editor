@@ -2,6 +2,7 @@
   position: fixed;
   bottom: 0;
   right: 0;
+  left: 240px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -10,10 +11,9 @@
   color: var(--text-secondary);
   background-color: var(--bg-secondary);
   border-top: 1px solid var(--border-color);
-  border-left: 1px solid var(--border-color);
   z-index: 10;
 
   &.collapsed {
-    right: 0;
+    left: 0;
   }
 }

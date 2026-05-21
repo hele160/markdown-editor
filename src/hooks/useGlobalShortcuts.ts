@@ -4,27 +4,21 @@ import { useThemeStore } from "@/stores/themeStore";
 
 /**
  * 全局快捷键 Hook
- * - Ctrl+S: 保存（触发 localStorage 持久化）
+ * - Ctrl+S: 保存（触发 localStorage 持久化，由 persist 中间件自动处理）
  * - Ctrl+N: 新建文件
  * - Ctrl+Shift+N: 切换暗色/亮色主题
  */
 export function useGlobalShortcuts() {
   const addFile = useEditorStore(s => s.addFile);
-  const files = useEditorStore(s => s.files);
   const toggleTheme = useThemeStore(s => s.toggleTheme);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const isCtrl = e.ctrlKey || e.metaKey;
 
-      // Ctrl+S: 保存（手动触发 localStorage 持久化）
+      // Ctrl+S: 保存（persist 中间件会自动同步到 localStorage）
       if (isCtrl && e.key === "s") {
         e.preventDefault();
-        localStorage.setItem("md-files", JSON.stringify(files));
-        const currentId = useEditorStore.getState().currentFileId;
-        if (currentId) {
-          localStorage.setItem("md-current", currentId);
-        }
       }
 
       // Ctrl+N: 新建文件
@@ -42,5 +36,5 @@ export function useGlobalShortcuts() {
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [addFile, files, toggleTheme]);
+  }, [addFile, toggleTheme]);
 }

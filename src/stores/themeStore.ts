@@ -1,13 +1,33 @@
 import { create } from "zustand";
-import type { Theme, ThemeStore } from "@/types";
+import { persist, createJSONStorage } from "zustand/middleware";
+import { immer } from "zustand/middleware/immer";
+import type { ThemeStore } from "@/types";
 
-export const useThemeStore = create<ThemeStore>(set => ({
-  theme: (localStorage.getItem("md-theme") as Theme) || "light",
+/** 将主题同步到 <html> 元素的 data-theme 属性 */
+function applyTheme(theme: string) {
+  document.documentElement.setAttribute("data-theme", theme);
+}
 
-  toggleTheme: () =>
-    set(state => {
-      const next = state.theme === "light" ? "dark" : "light";
-      localStorage.setItem("md-theme", next);
-      return { theme: next };
-    }),
-}));
+export const useThemeStore = create<ThemeStore>()(
+  persist(
+    immer(set => ({
+      theme: "light",
+
+      toggleTheme: () =>
+        set(state => {
+          state.theme = state.theme === "light" ? "dark" : "light";
+          applyTheme(state.theme);
+        }),
+    })),
+    {
+      name: "md-theme-storage",
+      storage: createJSONStorage(() => localStorage),
+      // 从 localStorage 恢复后，同步主题到 <html>
+      onRehydrateStorage: () => state => {
+        if (state) {
+          applyTheme(state.theme);
+        }
+      },
+    },
+  ),
+);

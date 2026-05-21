@@ -11,15 +11,17 @@
     "actived",
     "ant-design",
     "commitlint",
+    "immer",
+    "keymap",
     "lowcode",
     "lucide",
+    "partialize",
     "pnpm",
     "refline",
     "staged",
     "vercel",
     "vite",
-    "zustand",
-    "keymap"
+    "zustand"
   ],
   "ignorePaths": [
     "node_modules/**",
